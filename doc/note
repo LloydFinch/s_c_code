@@ -1,0 +1,130 @@
+C预处理器 #define T 100; 用来定义一个常量，注意没有=号
+extern关键字
+常量可以加后缀,U表示无符号整数，L表示long类型，可以小写，可以组合，顺序随便
+const也可以用来定义常量
+sizeof() 返回变量的大小，单位是字节
+& 返回变量的地址 &a返回a的地址
+* 指向一个变量 *a 指向a: *表示类型等价于数组定义中的[], int[] a 是一个int数组int *a;是一个int指针
+0或null为false，非0或非null为true
+函数声明可以不写形参，只写参数类型
+c枚举和java一样
+
+指针是一个变量，值是一个变量的地址，指针的声明方式: type *valname，eg:int *ip，所有指针的大小都相同(都是计算机的位数[64位就是8byte,32位就是4byte])，
+只是指向的数据类型不同，获取指针指向的变量的值: *ip，即:再加*号
+int a  = 10;
+int *ip = &a; //ip存储a的地址
+int b = *ip; //*ip = *(&a) = a;
+int **ipp = &ip; //ipp存储ip的地址，即:存储指针的地址,要回去a的值就是 *(*ipp) = *(ip) = a;
+
+
+空指针的值为0x0。eg: int *ptr = NULL;//0x
+指针可以进行自增自减等算数运算，因为他本是是一个十六进制的数值
+可以返回指针，将指针作为参数，从函数返回指针，函数指针，指针的指针，利用函数指针实现回调
+指针一句话:指针就是一个变量，只不过保存的是一个变量的地址(或者指向函数)
+
+
+字符串的一些API
+strcpy(s1,s2) 将字符串s2复制到s1
+strcat(s1,s2) 将s2连接到s1的末尾
+strlen(s1) 返回s1的长度
+strcmp(s1,s2) 比较s1和s2，s1<s2返回小于0，依次类推
+strchr(s1,ch) 返回一个指针，指向字符ch在s1中第一次出现的位置
+strstr(s1,s2) 返回一个指针，指向字符串s2在s1中第一次出现的位置
+
+
+
+结构体(struct): Java类
+结构体不需要new，声明即可，使用结构体访问成员使用.
+但是使用结构体的指针访问结构体的成员使用->
+
+
+位域(struct位运算)Java的BitSet, 定义方法跟结构相似，只是中间用冒号隔开，后面放长度
+共用体(union): 在相同的内存位置存储不同的数据类型
+
+
+typedef关键字，用来给类型起新名字. eg: typedef char: MChar，MChar就是char类型
+typedef和#define的区别:#define还可以为数字定义定义别名:#define 1 ONE;typedef是编译器解释执行的,#define是预编译器处理的
+
+C输入输出
+标准输入:stdin
+标准输出:stdout
+标准错误输出:stderr
+标准函数printf()/scanf()
+
+
+文件处理
+FILE fopen/fclose
+
+
+C预处理器简写为cpp
+所有的预处理命令都以#开头
+#define 定义宏
+#undef 取消已定义的宏
+#ifdef 如果宏已定义，则返回true
+#ifndef 如果宏没有定义，则返回true
+#if 如果给定的条件为true，则编译下面的代码
+#else #if不走就走它
+#elif
+#endif
+#error 遇到标准错误时，输出错误消息
+#progma 使用标准化方法，向编译器发布特殊的命令到编译器中
+#include 包含一个源代码文件
+
+C头文件
+以.h结尾，使用#include来引用
+
+C强制类型转换，前面加(类型)即可
+类型提升unsigned的大于非unsigned的，其他同java
+
+
+C错误处理
+errno
+perror():显示字符串
+strerror():返回一个指针
+
+C可变参数(需要引入stdarg.h)
+int表示传递的参数总数，...表示传递的所有参数
+int func(int count, ...)
+va_list valist; //声明变量列表
+va_start(valist,count); //初始化变量列表
+for(){int num = va_arg(valist,int)}; //遍历变量列表
+va_end(valist); //清理变量列表消耗的内存
+
+C内存管理（stdlib.h）
+内存分配:分配成功返回指向被分配的内存的指针，分配失败返回null
+void *calloc(int num,int size); 在内存中动态的分配num个长度为size的空间，并将每一个字节都初始化为0，
+void *malloc(int num*size); 在堆区分配一块指定大小的内存空间(num*size)，用来存放数据，该内存空间在函数执行完成后不会被初始化，它们的值是未知的
+void *realloc(void *address,int newsize); 重新分配内存，把address所指向的内存扩展到newsize
+内存回收
+void free(void *address); 释放address所指向的内存块，释放的是动态分配的内存空间
+
+
+C命令行参数
+命令行参数是使用main()函数来处理的,其中argc是指传入参数的个数,argv[]是一个指针数组，指向传递给程序的每个参数
+argv[0]存储程序的名称，argv[1]是第一个命令行参数的指针，argv[n]是最后一个参数，如果没有参数，argc为1，就是程序的名称
+
+
+C语言排序算法
+
+
+C标准库
+
+
+
+
+
+
+//=======================================
+Java是一个对象直接加载到内存，前面的会找到后面的
+C是一个函数一个函数加载的，前面的找不到后面的，所以需要将函数声明在前面，或者写头文件，头文件类似于java的接口，只有声明没有实现
+
+指针函数:返回一个指针的函数，本质是函数
+函数指针:指向一个函数的指针，本质是指针 eg:int (*func)()
+指针数组:存储指针的数组，本质是数组 eg:int *p[3]
+数组指针:指向数组的指针，本质是指针 eg:int (*p)[3]
+
+编译动态/静态库
+gcc test.c -fPIC -shared/static -o test.so/test.a
+
+静态库:加载快，但是大，编译时加载
+动态库:加载慢，但是小，运行时加载
